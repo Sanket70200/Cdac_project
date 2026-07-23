@@ -1,0 +1,136 @@
+import React, { useReducer, useState } from 'react';
+
+const initialState = {
+    firstname: '',
+    lastname: '',
+    email: '',
+    mobileno: '',
+    username: '',
+    password: ''
+};
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_FIELD':
+            return { ...state, [action.field]: action.value };
+        case 'RESET':
+            return initialState;
+        default:
+            return state;
+    }
+};
+
+const RegisterAdmin = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const [msg, setMsg] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log('Form submitted:', state);
+
+        try {
+            const response = await fetch('http://localhost:8203/newAdmin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(state),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to register admin');
+            }
+
+            const data = await response.json();
+            console.log('Registration successful:', data);
+            setMsg('Admin registered successfully!');
+            dispatch({ type: 'RESET' });
+        } catch (error) {
+            console.error('Error:', error);
+            setMsg('Failed to register admin. Please try again later.');
+        }
+    };
+
+    return (
+        <div className="container mt-5 d-flex justify-content-center">
+            <div className="col-md-4">
+                <h2 className="text-center mb-4">Register New Admin</h2>
+                
+                <form onSubmit={handleSubmit} className="p-4 border rounded bg-light">
+                    <div className="mb-3">
+                        <label htmlFor="firstname" className="form-label">First Name</label>
+                        <input
+                            type="text"
+                            id="firstname"
+                            className="form-control"
+                            value={state.firstname}
+                            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'firstname', value: e.target.value })}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="lastname" className="form-label">Last Name</label>
+                        <input
+                            type="text"
+                            id="lastname"
+                            className="form-control"
+                            value={state.lastname}
+                            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'lastname', value: e.target.value })}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="form-control"
+                            value={state.email}
+                            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'email', value: e.target.value })}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="mobileno" className="form-label">Mobile No</label>
+                        <input
+                            type="tel"
+                            id="mobileno"
+                            className="form-control"
+                            value={state.mobileno}
+                            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'mobileno', value: e.target.value })}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="username" className="form-label">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            className="form-control"
+                            value={state.username}
+                            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'username', value: e.target.value })}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            className="form-control"
+                            value={state.password}
+                            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'password', value: e.target.value })}
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100">Register</button>
+                    <button
+                        type="button"
+                        className="btn btn-secondary w-100 mt-2"
+                        onClick={() => dispatch({ type: 'RESET' })}
+                    >
+                        Reset
+                    </button>
+                    <br/>
+                    {msg && <div className={`alert ${msg.includes('successfully') ? 'alert-success' : 'alert-danger'}`} role="alert">{msg}</div>}
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default RegisterAdmin;
