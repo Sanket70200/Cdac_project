@@ -158,7 +158,7 @@ function UserControlPanel() {
 
               <Link
                 className="d-block p-2 text-dark text-decoration-none"
-                //to="MyBookings"
+                to="MyBookings"
                 onClick={handleOptionClick}
               >
                 My Bookings
@@ -166,10 +166,18 @@ function UserControlPanel() {
 
               <Link
                 className="d-block p-2 text-dark text-decoration-none"
-                //to="mytriphistroy"
+                to="mytriphistroy"
                 onClick={handleOptionClick}
               >
                 Trip History
+              </Link>
+
+              <Link
+                className="d-block p-2 text-dark text-decoration-none"
+                to="MyFeedback"
+                onClick={handleOptionClick}
+              >
+                My Feedback
               </Link>
 
               <Link
