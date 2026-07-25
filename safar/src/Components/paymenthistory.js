@@ -42,6 +42,9 @@ const MyBookingsHistory = () => {
     // Generate and Download PDF
     const handleDownload = (trip) => {
         const { days, nights } = calculateDaysNights(trip.start_date, trip.end_date);
+        const formattedAmount = Number(trip.amount || 0).toLocaleString("en-IN", {
+            maximumFractionDigits: 2,
+        });
         const pdf = new jsPDF("p", "mm", "a4");
 
         pdf.setFont("helvetica", "bold");
@@ -60,7 +63,7 @@ const MyBookingsHistory = () => {
         pdf.text(`Duration: ${days} Days / ${nights} Nights`, 20, 90);
         pdf.text(`Booked By: ${userDetails.firstname || "Guest"}`, 20, 100);
         pdf.text(`Number of Bookings: ${trip.noOfBookings}`, 20, 120);
-        pdf.text(`Total Price: ₹ ${trip.amount}`, 20, 140);
+        pdf.text(`Total Price: Rs. ${formattedAmount}`, 20, 140);
         pdf.line(20, 125, 190, 125);
 
         // pdf.setFont("helvetica", "bold");
