@@ -35,6 +35,8 @@ const AddTour = () => {
   const userid = userDetails?.user_id;
   const [state, dispatch] = useReducer(formReducer, initialState);
   const [successMessage, setSuccessMessage] = useState("");
+  const today = new Date();
+  const minimumStartDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
   useEffect(() => {
     if (userid) {
@@ -68,6 +70,11 @@ const AddTour = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: "SET_FIELD", field: name, value });
+
+    // If the start date is moved after the selected end date, clear the invalid end date.
+    if (name === "start_date" && state.end_date && value > state.end_date) {
+      dispatch({ type: "SET_FIELD", field: "end_date", value: "" });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -130,19 +137,30 @@ const AddTour = () => {
             </div>
             <div className="mb-3">
               <label className="form-label">Start Date</label>
-              <input type="date" className="form-control" name="start_date" value={state.start_date || ""} onChange={handleInputChange} />
+              <input
+                type="date"
+                className="form-control"
+                name="start_date"
+                value={state.start_date || ""}
+                min={minimumStartDate}
+                onChange={handleInputChange}
+                required
+              />
             </div>
             <div className="mb-3">
-            <label className="form-label">End Date</label>
-            <input
-              type="date"
-              className="form-control"
-              name="end_date"
-              value={state.end_date || ""}
-              min={state.start_date} // Prevents selecting a date before start_date
-              onChange={handleInputChange}
-            />
-          </div>
+              <label className="form-label">End Date</label>
+              <input
+                type="date"
+                className="form-control"
+                name="end_date"
+                value={state.end_date || ""}
+                min={state.start_date || minimumStartDate}
+                onChange={handleInputChange}
+                disabled={!state.start_date}
+                required
+              />
+              {!state.start_date && <small className="text-muted">Select the start date first.</small>}
+            </div>
 
             <div className="mb-3">
               <label className="form-label">Tourists Allowed</label>
