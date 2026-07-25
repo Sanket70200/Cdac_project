@@ -94,6 +94,13 @@ function CompanyPanel() {
             </Link>
 
             <Link
+              to="feedback"
+              className={`list-group-item list-group-item-action ${selectedOption === 'View Feedbacks' ? 'active' : ''}`}
+            >
+              View Feedbacks
+            </Link>
+
+            <Link
               to="suspendtrips"
               className={`list-group-item list-group-item-action ${selectedOption === 'View Feedbacks' ? 'active' : ''}`}
             >
