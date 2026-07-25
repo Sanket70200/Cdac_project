@@ -118,10 +118,12 @@ const AddPackageForm = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Persons Per Package</Form.Label>
+            <Form.Label>Package Price per Person (₹)</Form.Label>
             <Form.Control
               type="number"
-              step="0.1"
+              min="1"
+              step="1"
+              placeholder="Example: 5000"
               value={formData.person_per_package}
               onChange={(e) => setFormData({ ...formData, person_per_package: e.target.value })}
               required
