@@ -57,6 +57,10 @@ const Trips = () => {
   }, []);
 
   const deleteTrip = async (tripId) => {
+    if (!window.confirm("Permanently delete this trip and its bookings, feedback, and related records? This cannot be undone.")) {
+      return;
+    }
+
     try {
       const response = await fetch(deleteUrl, {
         method: "PUT",
@@ -64,11 +68,12 @@ const Trips = () => {
         body: JSON.stringify({ tripId }), // Ensure correct JSON format
       });
 
+      const result = await response.json();
       if (!response.ok) {
-        throw new Error("Failed to delete trip");
+        throw new Error(result.message || "Failed to permanently delete trip");
       }
 
-      alert("Trip deleted successfully!!");
+      alert(result.message || "Trip deleted permanently.");
       dispatch({ type: ACTIONS.DELETE_TRIP, payload: tripId });
     } catch (err) {
       alert(`Error: ${err.message}`);
@@ -116,7 +121,7 @@ const Trips = () => {
                   className="btn btn-danger mt-2"
                   onClick={() => deleteTrip(trip.tripId)}
                 >
-                  Suspend Trip
+                  Permanently Delete
                 </button>
                 <button
                   className="btn btn-info mt-2 ms-2"
