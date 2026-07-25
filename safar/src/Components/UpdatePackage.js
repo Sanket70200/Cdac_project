@@ -186,9 +186,15 @@ const PackageManager1 = () => {
           <Form onSubmit={handleUpdateSubmit}>
             {Object.keys(formData).map((key) => (
               <Form.Group className="mb-3" key={key}>
-                <Form.Label>{key.replace(/_/g, " ").toUpperCase()}</Form.Label>
+                <Form.Label>
+                  {key === "person_per_package"
+                    ? "PACKAGE PRICE PER PERSON (₹)"
+                    : key.replace(/_/g, " ").toUpperCase()}
+                </Form.Label>
                 <Form.Control
                   type={key === "person_per_package" ? "number" : "text"}
+                  min={key === "person_per_package" ? "1" : undefined}
+                  step={key === "person_per_package" ? "1" : undefined}
                   value={formData[key]}
                   onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
                   required
