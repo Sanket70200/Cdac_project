@@ -1,0 +1,22 @@
+/* Ensure that the modal covers the entire screen */
+.modal {
+    display: block; /* Make modal visible when trip is selected */
+    background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+  }
+  
+  .modal-dialog {
+    max-width: 600px;
+  }
+  
+  .modal-body img {
+    max-height: 400px;
+    object-fit: cover;
+  }
+  
+  .modal-header .btn-close {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
