@@ -25,9 +25,6 @@ function Navbar() {
                         }}
                     />
 
-                    <span className="fw-bold fs-3 text-white">
-                        Safar
-                    </span>
                 </Link>
 
                 <button
