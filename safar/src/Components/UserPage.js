@@ -57,9 +57,10 @@ function UserPage() {
     fetchTrips();
   }, []);
 
-  const filteredTrips = state.trips.filter((trip) =>
-    trip.packageid.package_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTrips = state.trips.filter((trip) => {
+    const packageName = trip?.packageid?.package_name || "";
+    return Boolean(trip?.packageid) && packageName.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   // Handle the "Add to Cart" button click
   const handleAddToCart = async (trip) => {
@@ -256,7 +257,7 @@ function UserPage() {
             <div className="col-md-4 mb-4" key={trip.trip_id}>
               <div className="card h-100 shadow-lg rounded-3">
                 <img
-                  src={trip.packageid.image_desc.replace(/'/g, "")}
+                  src={trip.packageid.image_desc?.replace(/'/g, "") || "/traveler.png"}
                   className="card-img-top"
                   alt={trip.packageid.package_name}
                   style={{ height: "200px", objectFit: "cover" }}
