@@ -181,12 +181,12 @@ function Card() {
           const handleTravelerFormSubmit = () => {
             setShowTravelerModal(false); // Close the modal
 
-            // if (selectedTrip) {
-            //   const pricePerPerson = selectedTrip.packageid?.person_per_package || 0;
-            //   const totalCost = pricePerPerson * bookingCount;
-            //   setTotalPrice(totalCost);
-            //   setShowBookingModal(true);
-            // }
+            if (selectedTrip) {
+              const pricePerPerson = selectedTrip.packageid?.person_per_package || 0;
+              const totalCost = pricePerPerson * bookingCount;
+              setTotalPrice(totalCost);
+              setShowBookingModal(true);
+            }
           };
 
 
