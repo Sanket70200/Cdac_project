@@ -1,13 +1,61 @@
 {
   "name": "safar",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8203",
+  "dependencies": {
+    "@babel/runtime": "^7.26.0",
+    "@opentelemetry/api": "^1.9.0",
+    "@reduxjs/toolkit": "^2.5.1",
+    "bootstrap": "^5.3.3",
+    "cra-template": "1.2.0",
+    "font-awesome": "^4.7.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
+    "lucide-react": "^0.469.0",
+    "path-browserify": "^1.0.1",
+    "react": "^19.0.0",
+    "react_redux": "^1.2.1",
+    "react-bootstrap": "^2.10.8",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
+    "react-modal": "^3.16.3",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.1",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^11.0.3",
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
+    "redux-persistent": "^4.0.0",
+    "redux-thunk": "^3.1.0",
+    "sweetalert2": "^11.16.0",
+    "web-vitals": "^4.2.4"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "scripts": {
+    "start": "set PORT=3020 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browser": {
+    "path": "path-browserify"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
