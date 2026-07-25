@@ -63,25 +63,29 @@ const DeletePackage = () => {
   };
 
   const handleDeletePackage = (packageid) => {
+    if (!window.confirm("Permanently delete this package, its trips, bookings, feedback, and related records? This cannot be undone.")) {
+      return;
+    }
+
     // Create the object with packageid for the request
     const packageData = { packageid };
 
-    fetch("http://localhost:8200/crud/deletePackage", {
+    fetch("http://localhost:8200/admin/deletePackage", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(packageData),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data === 1) { // If the backend returns 1 for success
-          dispatch({ type: "UPDATE_PACKAGE_STATUS", payload: { packageid } });
-          dispatch({ type: "SET_SUCCESS", payload: "Package deleted successfully" });
-
-          // Re-fetch packages after deletion
-          fetchPackages();
-        } else {
-          dispatch({ type: "SET_ERROR", payload: "Failed to delete package" });
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to permanently delete package");
         }
+        return data;
+      })
+      .then((data) => {
+        dispatch({ type: "UPDATE_PACKAGE_STATUS", payload: { packageid } });
+        dispatch({ type: "SET_SUCCESS", payload: data.message || "Package deleted permanently" });
+        fetchPackages();
       })
       .catch((error) => {
         dispatch({ type: "SET_ERROR", payload: "Error deleting package" });
