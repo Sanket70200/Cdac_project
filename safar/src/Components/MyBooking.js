@@ -68,6 +68,9 @@ const MyBookings = () => {
         }
 
         const { days, nights } = calculateDaysNights(previewData.startDate, previewData.endDate);
+        const formattedTotalPrice = Number(previewData.totalPrice || 0).toLocaleString("en-IN", {
+            maximumFractionDigits: 2,
+        });
 
         const pdf = new jsPDF("p", "mm", "a4");
         pdf.setFontSize(16);
@@ -82,7 +85,7 @@ const MyBookings = () => {
         pdf.text(`Duration: ${days} Days / ${nights} Nights`, 20, 90);
         pdf.text(`Booked By: ${userDetails?.name || "Guest"}`, 20, 100);
         pdf.text(`Payment Type: ${previewData.paymentType}`, 20, 110);
-        pdf.text(`Total Price: ₹ ${previewData.totalPrice}`, 20, 120);
+        pdf.text(`Total Price: Rs. ${formattedTotalPrice}`, 20, 120);
         
         pdf.text("Travelers:", 20, 130);
         let y = 140;
