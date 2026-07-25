@@ -64,9 +64,9 @@ const SuspendCom = () => {
   };
 
   const deleteCompany = async (userId) => {
-    if (!window.confirm("Are you sure you want to suspend this company?")) return;
+    if (!window.confirm("Permanently delete this company and its login account? This cannot be undone.")) return;
 
-    console.log("suspend company with userId:", userId); 
+    console.log("permanently delete company with userId:", userId); 
 
     try {
       const response = await fetch(deleteUrl, {
@@ -81,7 +81,7 @@ const SuspendCom = () => {
       console.log("Response Data:", result); 
 
       if (!response.ok) {
-        throw new Error(result.message || "Failed to suspend company");
+        throw new Error(result.message || "Failed to permanently delete company");
       }
 
       alert(result.message);
@@ -143,9 +143,9 @@ const SuspendCom = () => {
                   <td>
                     <button
                       className="btn btn-danger me-2"
-                      //onClick={() => deleteCompany(company.userId)}
+                      onClick={() => deleteCompany(company.userId)}
                     >
-                      Suspend Company
+                      Permanently Delete
                     </button>
                   </td>
                 </tr>
