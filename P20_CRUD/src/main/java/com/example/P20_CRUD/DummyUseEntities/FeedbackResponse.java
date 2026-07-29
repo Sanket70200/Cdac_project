@@ -13,5 +13,4 @@ public class FeedbackResponse {
     private Integer rating;
     private String feedbackDesc;
     private String reviewerName;
-    private LocalDateTime createdAt;
 }
